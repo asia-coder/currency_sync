@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Currency</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+
+  <div id="app">
+    <v-card flat tile class="elevation-0" v-if="!auth">
+      <h3>Логин: uktamovich95@gmail.com</h3>
+      <h3>Пароль: password</h3>
+      <v-card-text class="pb-0">
+        <v-form
+            @submit.prevent="login"
+        >
+          <v-row>
+            <v-col cols="12" class="pt-0 pb-0">
+              <v-text-field
+                  required
+                  v-model="form.email"
+                  label="Email"
+                  autocomplete="off"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pt-0">
+              <v-text-field
+                  v-model="form.password"
+                  label="Пароль"
+                  required
+                  type="password"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn
+            @click="login"
+            dark
+            rounded
+            large
+            height="50"
+        >
+          Авторизоваться
+        </v-btn>
+      </v-card-actions>
+
+    </v-card>
+
+    <v-card flat tile class="elevation-0" v-if="auth && !currencyItem">
+      <v-card-text class="pb-0">
+        <v-list>
+          <v-list-item
+              v-for="(item, i) in currency"
+              :key="i"
+              @click="getCurrency(item.id)"
+          >
+            ({{ item.code }}) {{ item.name }} - {{ item.rate }} руб.
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+
+      <div class="text-center">
+        <v-pagination
+            circle
+            dark
+            v-model="page"
+            :length="total"
+        ></v-pagination>
+      </div>
+    </v-card>
+
+    <v-card flat tile class="elevation-0" v-if="auth && currencyItem">
+      <v-card-text class="pb-0">
+        <h1>{{ currencyItem.name }}</h1>
+        <b>{{ currencyItem.code }} - {{ currencyItem.rate }} руб.</b>
+      </v-card-text>
+      <v-btn @click="goList">Назад к списку</v-btn>
+    </v-card>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js" integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>

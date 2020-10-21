@@ -1,0 +1,25 @@
+paths:
+    migrations: 'db/migrations'
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    development:
+        adapter: mysql
+        host: mariadb # or localhost
+        name: currency
+        user: root
+        pass: 'secret'
+        port: 3306
+        charset: utf8
+
+    production:
+        adapter: mysql
+        host: localhost
+        name: development_db
+        user: root
+        pass: ''
+        port: 3306
+        charset: utf8
+
+version_order: creation
